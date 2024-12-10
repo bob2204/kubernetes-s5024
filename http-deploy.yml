@@ -22,6 +22,10 @@ spec:
             containerPort: 80
       - image: php:8.2-fpm
         name: php
+        envFrom:
+          - configMapRef:
+              name: http
+            prefix: bob_
         env:
           - name: STAGE
             value: Kubernetes
@@ -33,3 +37,8 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          - name: JOUR
+            valueFrom:
+              configMapKeyRef:
+                name: http
+                key: JOUR
