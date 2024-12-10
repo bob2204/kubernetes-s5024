@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: www
+  name: www
+spec:
+  containers:
+  - image: nginx:1.26
+    name: www
+  - image: php:8.2-fpm
+    name: php
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
