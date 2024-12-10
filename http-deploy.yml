@@ -22,3 +22,14 @@ spec:
             containerPort: 80
       - image: php:8.2-fpm
         name: php
+        env:
+          - name: STAGE
+            value: Kubernetes
+          - name: IPPOD
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
