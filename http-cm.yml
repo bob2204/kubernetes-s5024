@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: http
+data:
+  STAGE: K8S
+  JOUR: mardi
