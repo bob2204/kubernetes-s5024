@@ -12,6 +12,6 @@ spec:
     protocol: TCP
     targetPort: http
   selector:
-    app: http-pod
+    app: http
 status:
   loadBalancer: {}
