@@ -17,5 +17,8 @@ spec:
       containers:
       - image: nginx:1.26
         name: nginx
+        ports:
+          - name: http
+            containerPort: 80
       - image: php:8.2-fpm
         name: php
