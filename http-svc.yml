@@ -13,5 +13,6 @@ spec:
     targetPort: http
   selector:
     app: http
+  type: NodePort
 status:
   loadBalancer: {}
