@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: busy
+  name: busy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: busy
+    spec:
+      containers:
+        - image: busybox:1.28
+          name: busybox
+          command:
+            - sleep
+            - "3600"
+          volumeMounts:
+            - name: stage
+              mountPath: /documents
+      volumes:
+        - name: stage
+          hostPath:
+            path: /data
+            type: Directory
