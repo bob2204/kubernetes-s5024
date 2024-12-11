@@ -22,9 +22,9 @@ spec:
             containerPort: 80
         startupProbe:
           httpGet:
-            path: /start
+            path: /index.html
             port: 80
-          periodSeconds: 15
+          periodSeconds: 2
           failureThreshold: 2
         readinessProbe:
           httpGet:
@@ -38,6 +38,9 @@ spec:
             port: 80
           periodSeconds: 5
           failureThreshold: 4
+        volumeMounts:
+          - name: html
+            mountPath: /usr/share/nginx/html
       - image: php:8.2-fpm
         name: php
         envFrom:
@@ -65,3 +68,8 @@ spec:
               secretKeyRef:
                 name: http
                 key: PASSWORD 
+      volumes:
+        - name: html
+          nfs:
+            server: 172.18.0.1
+            path: /html
