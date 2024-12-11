@@ -20,6 +20,12 @@ spec:
         ports:
           - name: http
             containerPort: 80
+        startupProbe:
+          httpGet:
+            path: /start
+            port: 80
+          periodSeconds: 15
+          failureThreshold: 2
         readinessProbe:
           httpGet:
             path: /index.html
