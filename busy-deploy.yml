@@ -26,6 +26,6 @@ spec:
               mountPath: /documents
       volumes:
         - name: stage
-          hostPath:
-            path: /data
-            type: Directory
+          nfs:
+            server: 172.18.0.1
+            path: /
