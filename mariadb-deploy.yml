@@ -9,6 +9,8 @@ spec:
   selector:
     matchLabels:
       app: mariadb
+  strategy: 
+    type: Recreate
   template:
     metadata:
       labels:
@@ -23,8 +25,14 @@ spec:
         volumeMounts:
           - name: mariadb-pw
             mountPath: /tmp/mariadb
+          - name: datadir
+            mountPath: /var/lib/mysql
       volumes:
         - name: mariadb-pw
           secret:
             secretName: mariadb
             defaultMode: 0400
+        - name: datadir
+          nfs:
+            server: 172.18.0.1
+            path: /datadir
