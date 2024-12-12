@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mariadb
+  name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - image: mariadb:10.8
+        name: mariadb
+        env:
+          - name: MARIADB_ROOT_PASSWORD_FILE
+            value: /tmp/mariadb/password
+        volumeMounts:
+          - name: mariadb-pw
+            mountPath: /tmp/mariadb
+      volumes:
+        - name: mariadb-pw
+          secret:
+            secretName: mariadb
+            defaultMode: 0400
