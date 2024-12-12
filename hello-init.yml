@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-init
+  name: hello-init
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello-init
+  template:
+    metadata:
+      labels:
+        app: hello-init
+    spec:
+      initContainers:
+      - name: prelude
+        image: busybox
+        command:
+          - sh
+          - -c
+          - hostname > /mnt/status
+        volumeMounts:
+          - name: status
+            mountPath: /mnt
+      containers:
+      - image: bob2606/hello-http:0.8.26
+        name: hello-http
+        volumeMounts:
+          - name: status
+            mountPath: /var/lib/hello-http
+      volumes:
+        - name: status
+          emptyDir:
+            medium: Memory  # Optionnel
