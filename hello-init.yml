@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     app: hello-init
@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       app: hello-init
+  serviceName: hello-init
   template:
     metadata:
       labels:
@@ -20,13 +21,23 @@ spec:
         command:
           - sh
           - -c
-          - hostname > /mnt/status
+          - |
+            nb=$(hostname|cut -d- -f3)
+            if [ $nb = "0" ]
+            then
+              echo Primaire > /mnt/status
+            else
+              echo Secondaire n°$nb > /mnt/status
+            fi
         volumeMounts:
           - name: status
             mountPath: /mnt
       containers:
       - image: bob2606/hello-http:0.8.26
         name: hello-http
+        env:
+          - name: SERVICE
+            value: hello-init
         volumeMounts:
           - name: status
             mountPath: /var/lib/hello-http
