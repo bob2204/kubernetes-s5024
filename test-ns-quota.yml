@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  creationTimestamp: null
+  name: load-1
+  namespace: test
+spec:
+  hard:
+    limits.cpu: 500m
+status: {}
